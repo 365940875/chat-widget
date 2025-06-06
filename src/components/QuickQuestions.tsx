@@ -20,10 +20,6 @@ function QuickQuestions({ onQuestionClick }: QuickQuestionsProps) {
     }
   }, [onQuestionClick]);
 
-  const handleQuestionClick = useCallback((question: string) => {
-    onQuestionClick(question);
-  }, [onQuestionClick]);
-
   return (
     <nav 
       className="quick-questions-container"
@@ -39,7 +35,7 @@ function QuickQuestions({ onQuestionClick }: QuickQuestionsProps) {
           <button
             key={index}
             className="quick-question-btn"
-            onClick={() => handleQuestionClick(question)}
+            onClick={() => onQuestionClick(question)}
             onKeyDown={(e) => handleKeyDown(e, question)}
             aria-label={`Ask: ${question}`}
             tabIndex={0}

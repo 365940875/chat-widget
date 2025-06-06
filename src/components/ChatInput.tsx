@@ -37,9 +37,9 @@ function ChatInput({ onSend }: ChatInputProps) {
     }
   }, [input, onSend]);
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-  }, []);
+  };
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -48,12 +48,12 @@ function ChatInput({ onSend }: ChatInputProps) {
     }
   }, [handleSend]);
 
-  const handleButtonKeyDown = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleButtonKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleSend();
     }
-  }, [handleSend]);
+  };
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();

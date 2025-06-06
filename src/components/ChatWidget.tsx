@@ -37,18 +37,18 @@ function ChatWidget() {
     }
   }, []);
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setIsExpanded(false);
     setIsMinimized(false);
-  }, []);
+  };
 
-  const handleMinimize = useCallback(() => {
+  const handleMinimize = () => {
     setIsMinimized(true);
-  }, []);
+  };
 
-  const handleMaximize = useCallback(() => {
+  const handleMaximize = () => {
     setIsMinimized(false);
-  }, []);
+  };
 
   if (!isExpanded) {
     return (
