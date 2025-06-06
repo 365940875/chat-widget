@@ -8,15 +8,13 @@ import { Sender, Message } from '../types/Sender';
 
 function ChatWidget() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [isOnline] = useState(true); // 模拟在线状态
 
   const initialMessages: Message[] = useMemo(() => [
-    { sender: Sender.BOT, text: 'Hello! How can I help you today?' },
-    { sender: Sender.BOT, text: 'I can assist you with various questions and tasks.' },
-    { sender: Sender.BOT, text: 'Feel free to ask me anything you need help with.' },
-    { sender: Sender.BOT, text: 'You can ask about our products, services, or general information.' },
-    { sender: Sender.BOT, text: 'What would you like to know?' },
-    { sender: Sender.BOT, text: 'I\'m here to help make your experience as smooth as possible.' },
-    { sender: Sender.BOT, text: 'Please don\'t hesitate to reach out if you have any questions.' },
+    { sender: Sender.BOT, text: 'Hello! I\'m your AI assistant. How can I help you today?' },
+    { sender: Sender.BOT, text: 'I can answer various questions and provide assistance and support.' },
+    { sender: Sender.BOT, text: 'Feel free to ask me anything you need help with!' },
   ], []);
 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -39,6 +37,19 @@ function ChatWidget() {
     }
   }, []);
 
+  const handleClose = useCallback(() => {
+    setIsExpanded(false);
+    setIsMinimized(false);
+  }, []);
+
+  const handleMinimize = useCallback(() => {
+    setIsMinimized(true);
+  }, []);
+
+  const handleMaximize = useCallback(() => {
+    setIsMinimized(false);
+  }, []);
+
   if (!isExpanded) {
     return (
       <button
@@ -57,13 +68,28 @@ function ChatWidget() {
   }
 
   return (
-    <div className="chatbot-container" role="dialog" aria-labelledby="chat-title" aria-modal="false">
-      <ChatHeader onClose={() => setIsExpanded(false)} />
-      <ChatMessages 
-        messages={messages}
+    <div 
+      className={`chatbot-container ${isMinimized ? 'minimized' : ''}`} 
+      role="dialog" 
+      aria-labelledby="chat-header" 
+      aria-modal="false"
+    >
+      <ChatHeader 
+        onClose={handleClose}
+        onMinimize={isMinimized ? undefined : handleMinimize}
+        onMaximize={isMinimized ? handleMaximize : undefined}
+        isOnline={isOnline}
+        isMinimized={isMinimized}
       />
-      <QuickQuestions onQuestionClick={handleSend} />
-      <ChatInput onSend={handleSend} />
+      {!isMinimized && (
+        <>
+          <ChatMessages 
+            messages={messages}
+          />
+          <QuickQuestions onQuestionClick={handleSend} />
+          <ChatInput onSend={handleSend} />
+        </>
+      )}
     </div>
   );
 }

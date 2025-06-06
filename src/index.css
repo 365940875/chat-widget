@@ -29,6 +29,17 @@ body {
   flex-direction: column;
   overflow: hidden;
   animation: slideInUp 0.3s ease-out;
+  transition: all 0.3s ease;
+}
+
+/* Minimized chat container */
+.chatbot-container.minimized {
+  height: auto;
+  overflow: visible;
+}
+
+.chatbot-container.minimized .chat-header {
+  border-radius: 12px;
 }
 
 /* Quick questions container */
@@ -186,12 +197,14 @@ body {
 
 /* Chat header styles */
 .chat-header {
-  background-color: #0078D4;
-  padding: 12px;
+  background: linear-gradient(135deg, #0078D4 0%, #005a9e 100%);
+  padding: 16px;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 120, 212, 0.2);
+  position: relative;
 }
 
 .chat-header h1 {
@@ -200,10 +213,87 @@ body {
   font-weight: bold;
 }
 
-.close-button {
-  padding: 4px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+/* Header left section */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.bot-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-info h1 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+
+/* Status indicator */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.status-indicator.online .status-dot {
+  background-color: #00d4aa;
+  box-shadow: 0 0 6px rgba(0, 212, 170, 0.6);
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.offline .status-dot {
+  background-color: #ff6b6b;
+}
+
+.status-text {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Header actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.header-button {
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -211,6 +301,40 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  opacity: 0.8;
+}
+
+.header-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.header-button:active {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(0);
+}
+
+/* Close button inherits from header-button but with smaller padding for backward compatibility */
+.close-button {
+  padding: 4px;
+}
+
+/* Pulse animation for online status */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Message container styles */
@@ -389,16 +513,6 @@ body {
   transform: scale(0.95);
 }
 
-/* Close button hover effect */
-.close-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.close-button:active {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(0.95);
-}
-
 /* Chat container expand animation */
 @keyframes slideInUp {
   from {
@@ -467,7 +581,29 @@ body {
   }
   
   .chat-header {
-    padding: 10px;
+    padding: 10px 12px;
+  }
+  
+  .header-left {
+    gap: 8px;
+  }
+  
+  .bot-avatar {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .header-info h1 {
+    font-size: 14px;
+  }
+  
+  .header-status {
+    gap: 8px;
+    font-size: 11px;
+  }
+  
+  .header-button {
+    padding: 6px;
   }
   
   .chat-form {
@@ -513,6 +649,6 @@ body {
   }
   
   .chat-messages-container {
-    max-height: 450px;
+    max-height: 350px;
   }
 }
