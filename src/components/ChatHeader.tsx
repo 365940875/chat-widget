@@ -80,12 +80,6 @@ function ChatHeader({
     }
   }, []);
 
-  const handleButtonClick = useCallback((action?: () => void, buttonName?: string) => {
-    return () => {
-      action?.();
-    };
-  }, []);
-
   return (
     <header 
       className="chat-header"
@@ -108,8 +102,8 @@ function ChatHeader({
       <div className="header-actions">
         {isMinimized && onMaximize && (
           <button
-            onClick={handleButtonClick(onMaximize, 'maximize')}
-            onKeyDown={(e) => handleKeyDown(e, () => onMaximize())}
+            onClick={onMaximize}
+            onKeyDown={(e) => handleKeyDown(e, onMaximize)}
             aria-label="Expand"
             tabIndex={0}
             className="header-button maximize-button"
@@ -121,8 +115,8 @@ function ChatHeader({
         
         {!isMinimized && onMinimize && (
           <button
-            onClick={handleButtonClick(onMinimize, 'minimize')}
-            onKeyDown={(e) => handleKeyDown(e, () => onMinimize())}
+            onClick={onMinimize}
+            onKeyDown={(e) => handleKeyDown(e, onMinimize)}
             aria-label="Minimize"
             tabIndex={0}
             className="header-button minimize-button"
@@ -134,8 +128,8 @@ function ChatHeader({
         
         {onClose && (
           <button
-            onClick={handleButtonClick(onClose, 'close')}
-            onKeyDown={(e) => handleKeyDown(e, () => onClose())}
+            onClick={onClose}
+            onKeyDown={(e) => handleKeyDown(e, onClose)}
             aria-label="Close chat assistant"
             tabIndex={0}
             className="header-button close-button"

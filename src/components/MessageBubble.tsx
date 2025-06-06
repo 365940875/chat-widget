@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Sender } from '../types/Sender';
 
 interface MessageBubbleProps {
@@ -22,14 +22,6 @@ const BotIcon = () => (
 function MessageBubble({ sender, text, messageIndex }: MessageBubbleProps) {
   const isUser = sender === Sender.USER;
   
-  const formattedText = useMemo(() => {
-    return text.split('\n').map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        {index < text.split('\n').length - 1 && <br />}
-      </React.Fragment>
-    ));
-  }, [text]);
   return (
     <div
       className={`message-container ${isUser ? 'user' : 'bot'}`}
@@ -56,7 +48,12 @@ function MessageBubble({ sender, text, messageIndex }: MessageBubbleProps) {
           <span className="sr-only">
             {isUser ? 'You said:' : 'Assistant said:'}
           </span>
-          {formattedText}
+          {text.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index < text.split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
         </div>
       </div>
       

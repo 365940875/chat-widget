@@ -37,16 +37,16 @@ function ChatMessages({ messages }: ChatMessagesProps) {
     setIsUserScrolled(false);
   }, []);
 
-  const handleNotificationKeyDown = useCallback((e: React.KeyboardEvent) => {
+  const handleNotificationKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       scrollToBottom(true);
     }
-  }, [scrollToBottom]);
+  };
 
-  const handleNotificationClick = useCallback(() => {
+  const handleNotificationClick = () => {
     scrollToBottom(true);
-  }, [scrollToBottom]);
+  };
 
   const lastMessage = useMemo(() => {
     return messages.length > 0 ? messages[messages.length - 1] : null;
@@ -111,4 +111,4 @@ function ChatMessages({ messages }: ChatMessagesProps) {
   );
 }
 
-export default React.memo(ChatMessages);
+export default ChatMessages;
